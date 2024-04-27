@@ -10,7 +10,8 @@ from models.database import db
 
 def getFreeBookingIntervals(starts_at=datetime.strptime("0001-01-01 12:30:00", "%Y-%m-%d %H:%M:%S"),
                             ends_at=datetime.strptime("0001-01-01 12:40:00", "%Y-%m-%d %H:%M:%S")):
-    booked_intervals = db.query(BookedInterval).filter_by(table_id=1) \
+    booked_intervals = db.query(BookedInterval) \
+        .filter_by(table_id=1) \
         .filter(BookedInterval.ends_at > starts_at) \
         .filter(BookedInterval.starts_at < ends_at) \
         .order_by(BookedInterval.starts_at) \
@@ -38,6 +39,7 @@ def getFreeBookingIntervals(starts_at=datetime.strptime("0001-01-01 12:30:00", "
         start_time_str = free_interval[0].strftime("%Y-%m-%d %H:%M:%S")  # Format start time
         end_time_str = free_interval[1].strftime("%Y-%m-%d %H:%M:%S")  # Format end time
         print(f"Start Time: {start_time_str}, End Time: {end_time_str}")
+
 
 if __name__ == '__main__':
     Base.metadata.drop_all(database.engine)
