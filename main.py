@@ -1,15 +1,15 @@
-from datetime import datetime, timedelta
+from datetime import datetime
 
 from models import database
 from models.Base import Base
-from models.User import User
-from models.Table import Table
 from models.BookedInterval import BookedInterval
+from models.Table import Table
+from models.User import User
 from models.database import db
 
 
-def getFreeBookingIntervals(starts_at=datetime.strptime("0001-01-01 12:30:00", "%Y-%m-%d %H:%M:%S"),
-                            ends_at=datetime.strptime("0001-01-01 12:40:00", "%Y-%m-%d %H:%M:%S")):
+def get_free_booking_intervals(starts_at=datetime.strptime("0001-01-01 12:30:00", "%Y-%m-%d %H:%M:%S"),
+                               ends_at=datetime.strptime("0001-01-01 12:40:00", "%Y-%m-%d %H:%M:%S")):
     booked_intervals = db.query(BookedInterval) \
         .filter_by(table_id=1) \
         .filter(BookedInterval.ends_at > starts_at) \
@@ -68,4 +68,4 @@ if __name__ == '__main__':
 
     db.commit()
 
-    getFreeBookingIntervals()
+    get_free_booking_intervals()
